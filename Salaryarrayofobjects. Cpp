@@ -1,0 +1,113 @@
+#include <iostream>
+#include <iomanip>
+#include <cstring>
+using namespace std;
+
+#define SIZE 10
+
+class Person
+{
+    char name[64];
+    int age;
+    char address[64];
+
+    float basic, hra, da, ta, gross;
+
+    void calculateSalary()
+    {
+        hra = 0.20 * basic;
+        da = 0.50 * basic;
+        ta = 1500;
+        gross = basic + hra + da + ta;
+    }
+
+public:
+
+    Person()
+    {
+        strcpy(name, "Unknown");
+        strcpy(address, "Unknown");
+        age = 0;
+        basic = hra = da = ta = gross = 0;
+    }
+
+    Person(char n[], int a, char addr[], float b)
+    {
+        strcpy(name, n);
+        strcpy(address, addr);
+        age = a;
+        basic = b;
+        calculateSalary();
+    }
+
+    static inline int youngestAge(Person p[], int n)
+    {
+        int min = p[0].age;
+
+        for (int i = 1; i < n; i++)
+        {
+            if (p[i].age < min)
+                min = p[i].age;
+        }
+
+        return min;
+    }
+
+    static inline int eldestAge(Person p[], int n)
+    {
+        int max = p[0].age;
+
+        for (int i = 1; i < n; i++)
+        {
+            if (p[i].age > max)
+                max = p[i].age;
+        }
+
+        return max;
+    }
+
+    void displaySalarySlip()
+    {
+        cout << "\n-----------------------------\n";
+        cout << "        SALARY SLIP\n";
+        cout << "-----------------------------\n";
+
+        cout << "Name    : " << name << endl;
+        cout << "Age     : " << age << endl;
+        cout << "Address : " << address << endl;
+
+        cout << fixed << setprecision(2);
+
+        cout << "Basic   : " << basic << endl;
+        cout << "HRA     : " << hra << endl;
+        cout << "DA      : " << da << endl;
+        cout << "TA      : " << ta << endl;
+        cout << "Gross   : " << gross << endl;
+
+        cout << "-----------------------------\n";
+    }
+};
+
+int main()
+{
+    Person p[SIZE];
+
+    p[0] = Person((char*)"Amit Sharma", 28, (char*)"Salt Lake, Kolkata", 30000);
+    p[1] = Person((char*)"Riya Sen", 34, (char*)"Howrah, West Bengal", 45000);
+    p[2] = Person((char*)"Rahul Das", 45, (char*)"Park Street, Kolkata", 60000);
+    p[3] = Person((char*)"Sneha Roy", 23, (char*)"Dum Dum, Kolkata", 25000);
+    p[4] = Person((char*)"Arjun Mehta", 52, (char*)"Noida, UP", 80000);
+    p[5] = Person((char*)"Priya Nair", 31, (char*)"Bangalore, KA", 52000);
+    p[6] = Person((char*)"Vikram Singh", 39, (char*)"Delhi", 58000);
+    p[7] = Person((char*)"Anita Ghosh", 47, (char*)"Barasat, Kolkata", 48000);
+    p[8] = Person((char*)"Sourav Paul", 26, (char*)"Durgapur, WB", 28000);
+    p[9] = Person((char*)"Meera Iyer", 58, (char*)"Chennai, TN", 75000);
+
+    cout << "Youngest age: " << Person::youngestAge(p, SIZE) << endl;
+    cout << "Eldest age: " << Person::eldestAge(p, SIZE) << endl;
+
+    for (int i = 0; i < SIZE; i++)
+        p[i].displaySalarySlip();
+
+    return 0;
+}
